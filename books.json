@@ -1,0 +1,22 @@
+[
+  {"title": "The Great Gatsby", "author": "F. Scott Fitzgerald", "category": "Fiction", "available": true},
+  {"title": "To Kill a Mockingbird", "author": "Harper Lee", "category": "Fiction", "available": false},
+  {"title": "1984", "author": "George Orwell", "category": "Dystopian", "available": true},
+  {"title": "Pride and Prejudice", "author": "Jane Austen", "category": "Romance", "available": true},
+  {"title": "The Catcher in the Rye", "author": "J.D. Salinger", "category": "Fiction", "available": false},
+  {"title": "The Hobbit", "author": "J.R.R. Tolkien", "category": "Fantasy", "available": true},
+  {"title": "Fahrenheit 451", "author": "Ray Bradbury", "category": "Dystopian", "available": true},
+  {"title": "Jane Eyre", "author": "Charlotte Brontë", "category": "Romance", "available": false},
+  {"title": "Brave New World", "author": "Aldous Huxley", "category": "Dystopian", "available": true},
+  {"title": "Moby Dick", "author": "Herman Melville", "category": "Adventure", "available": true},
+  {"title": "War and Peace", "author": "Leo Tolstoy", "category": "Historical", "available": false},
+  {"title": "Crime and Punishment", "author": "Fyodor Dostoevsky", "category": "Crime", "available": true},
+  {"title": "The Odyssey", "author": "Homer", "category": "Epic", "available": true},
+  {"title": "The Iliad", "author": "Homer", "category": "Epic", "available": false},
+  {"title": "The Lord of the Rings", "author": "J.R.R. Tolkien", "category": "Fantasy", "available": true},
+  {"title": "Animal Farm", "author": "George Orwell", "category": "Political Satire", "available": true},
+  {"title": "Wuthering Heights", "author": "Emily Brontë", "category": "Romance", "available": false},
+  {"title": "Hamlet", "author": "William Shakespeare", "category": "Tragedy", "available": true},
+  {"title": "Macbeth", "author": "William Shakespeare", "category": "Tragedy", "available": true},
+  {"title": "A Tale of Two Cities", "author": "Charles Dickens", "category": "Historical", "available": true}
+]

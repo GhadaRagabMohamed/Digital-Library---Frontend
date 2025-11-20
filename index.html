@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Library</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #FFF8F0; /* لون أوف وايت دافئ */
+      color: #5D4037; /* بني داكن للنص */
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    nav {
+      background: #5D4037; /* بني داكن */
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #D7CCC8; /* بني فاتح */
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+      background-size: cover;
+      background-position: center;
+      /* filter: blur(1px);*/
+      z-index: -2;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(93, 64, 55, 0.7); /* طبقة شبه شفافة بنية داكنة */
+      z-index: -1;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      z-index: 1;
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: #8D6E63; /* بني متوسط - لون جديد متناسق */
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .cta-button:hover {
+      background: #A1887F; /* بني أفتح - لون جديد متناسق */
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Features Section */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(93, 64, 55, 0.08); /* ظل بني فاتح */
+      transition: transform 0.3s;
+      border: 1px solid #D7CCC8; /* حدود بني فاتح */
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(93, 64, 55, 0.15);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      color: #8D6E63; /* بني متوسط - لون جديد متناسق */
+      margin-bottom: 1rem;
+    }
+
+    /* Search Section */
+    .search-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(93, 64, 55, 0.08);
+      margin: 2rem 0;
+      border: 1px solid #D7CCC8;
+    }
+
+    .search-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .search-bar input {
+      flex: 1 1 60%;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      border: 1px solid #BCAAA4; /* بني فاتح للحدود */
+      border-radius: 8px;
+      outline: none;
+      transition: all 0.3s;
+      background-color: #FFF8F0; /* خلفية أوف وايت */
+    }
+
+    .search-bar input:focus {
+      border-color: #8D6E63; /* بني متوسط - لون جديد متناسق */
+      box-shadow: 0 0 0 3px rgba(141, 110, 99, 0.2);
+    }
+
+    .search-bar button {
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      background-color: #5D4037; /* بني داكن */
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+
+    .search-bar button:hover {
+      background-color: #8D6E63; /* بني متوسط - لون جديد متناسق */
+      transform: translateY(-2px);
+    }
+
+    /* Book Catalog */
+    .catalog-section {
+      margin: 3rem 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #5D4037; /* بني داكن */
+      font-size: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(93, 64, 55, 0.08);
+      border: 1px solid #D7CCC8;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #D7CCC8; /* حدود بني فاتح */
+    }
+
+    th {
+      background-color: #F5F5F5; /* رمادي فاتح جداً */
+      cursor: pointer;
+      position: relative;
+      transition: background 0.3s;
+      font-weight: 600;
+      color: #5D4037; /* بني داكن */
+    }
+
+    th:hover {
+      background-color: #EDE7F6; /* لافندر فاتح */
+    }
+
+    th.sort-asc::after {
+      content: " ▲";
+      font-size: 0.8rem;
+    }
+
+    th.sort-desc::after {
+      content: " ▼";
+      font-size: 0.8rem;
+    }
+
+    tr:hover {
+      background-color: #F3E5F5; /* لافندر فاتح جداً */
+    }
+
+    .status-available {
+      color: #2E7D32; /* أخضر داكن */
+      font-weight: 600;
+      background-color: rgba(46, 125, 50, 0.1);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      display: inline-block;
+    }
+
+    .status-borrowed {
+      color: #C62828; /* أحمر داكن */
+      font-weight: 600;
+      background-color: rgba(198, 40, 40, 0.1);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      display: inline-block;
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .pagination button {
+      padding: 0.5rem 1rem;
+      border: 1px solid #5D4037; /* بني داكن */
+      background-color: white;
+      color: #5D4037; /* بني داكن */
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+
+    .pagination button.active, .pagination button:hover {
+      background-color: #8D6E63; /* بني متوسط - لون جديد متناسق */
+      color: white;
+      transform: translateY(-1px);
+      border-color: #8D6E63;
+    }
+
+    /* Footer */
+    footer {
+      background: #5D4037; /* بني داكن */
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .search-bar input {
+        flex: 1 1 100%;
+      }
+
+      .search-bar button {
+        width: 100%;
+      }
+
+      th, td {
+        font-size: 0.9rem;
+        padding: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-container">
+    <div class="logo">Digital Library</div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#catalog">Catalog</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <h1>Welcome to Digital Library</h1>
+    <p>Discover thousands of books, research papers, and digital resources</p>
+    <a href="#catalog" class="cta-button">Browse Catalog</a>
+  </div>
+</section>
+
+<!-- Main Content -->
+<div class="container">
+  <!-- Features Section -->
+  <section class="features">
+    <div class="feature-card">
+      <div class="feature-icon">📚</div>
+      <h3>Extensive Collection</h3>
+      <p>Access thousands of books across all genres and subjects</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <h3>Smart Search</h3>
+      <p>Find exactly what you're looking for with our advanced search</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💻</div>
+      <h3>Digital Access</h3>
+      <p>Read anytime, anywhere with our digital platform</p>
+    </div>
+  </section>
+
+  <!-- Search Section -->
+  <section class="search-section">
+    <h2>Find Your Next Read</h2>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search by title, author, or category...">
+      <button id="searchBtn">Search</button>
+    </div>
+  </section>
+
+  <!-- Book Catalog -->
+  <section class="catalog-section" id="catalog">
+    <h2 class="section-title">Book Catalog</h2>
+    <table id="booksTable">
+      <thead>
+        <tr>
+          <th data-key="title">Title</th>
+          <th data-key="author">Author</th>
+          <th data-key="category">Category</th>
+          <th data-key="available">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="4">Loading books...</td></tr>
+      </tbody>
+    </table>
+
+    <div class="pagination" id="pagination"></div>
+  </section>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2025 Digital Library. All rights reserved.</p>
+</footer>
+
+<script>
+  const API_URL = "books.json";
+  let booksDataOriginal = [];
+  let booksData = [];
+  let currentPage = 1;
+  const rowsPerPage = 5;
+  let currentSort = { key: '', order: '' };
+
+  async function fetchBooks() {
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      booksDataOriginal = await response.json();
+      booksData = [...booksDataOriginal];
+      renderTable();
+      renderPagination();
+    } catch (error) {
+      console.error("Error fetching books:", error);
+      document.querySelector("#booksTable tbody").innerHTML = `<tr><td colspan="4">Failed to load books. Please check if books.json exists.</td></tr>`;
+    }
+  }
+
+  function renderTable() {
+    const tbody = document.querySelector("#booksTable tbody");
+    tbody.innerHTML = "";
+
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const pageData = booksData.slice(start, end);
+
+    if (pageData.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4">No books found. Try a different search term.</td></tr>`;
+      return;
+    }
+
+    pageData.forEach(book => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${book.title}</td>
+        <td>${book.author}</td>
+        <td>${book.category}</td>
+        <td><span class="${book.available ? 'status-available' : 'status-borrowed'}">
+          ${book.available ? 'Available' : 'Borrowed'}
+        </span></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderPagination() {
+    const paginationDiv = document.getElementById("pagination");
+    paginationDiv.innerHTML = "";
+
+    const totalPages = Math.ceil(booksData.length / rowsPerPage);
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement("button");
+      btn.textContent = i;
+      btn.classList.toggle("active", i === currentPage);
+      btn.addEventListener("click", () => {
+        currentPage = i;
+        renderTable();
+        renderPagination();
+      });
+      paginationDiv.appendChild(btn);
+    }
+  }
+
+  function searchBooks() {
+    const query = document.getElementById("searchInput").value.toLowerCase();
+    currentPage = 1;
+    booksData = booksDataOriginal.filter(book =>
+      book.title.toLowerCase().includes(query) ||
+      book.author.toLowerCase().includes(query) ||
+      book.category.toLowerCase().includes(query)
+    );
+    renderTable();
+    renderPagination();
+  }
+
+  function sortBooks(key) {
+    const order = currentSort.key === key && currentSort.order === 'asc' ? 'desc' : 'asc';
+    booksData.sort((a, b) => {
+      if (a[key] < b[key]) return order === 'asc' ? -1 : 1;
+      if (a[key] > b[key]) return order === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    currentSort = { key, order };
+    document.querySelectorAll("th").forEach(th => th.classList.remove("sort-asc", "sort-desc"));
+    document.querySelector(`th[data-key="${key}"]`).classList.add(order === 'asc' ? 'sort-asc' : 'sort-desc');
+
+    renderTable();
+  }
+
+  // Event Listeners
+  document.getElementById("searchBtn").addEventListener("click", searchBooks);
+  document.getElementById("searchInput").addEventListener("keypress", function(e) {
+    if (e.key === 'Enter') {
+      searchBooks();
+    }
+  });
+  document.querySelectorAll("th").forEach(th => th.addEventListener("click", () => sortBooks(th.dataset.key)));
+
+  // Initialize
+  fetchBooks();
+</script>
+
+</body>
+</html>
